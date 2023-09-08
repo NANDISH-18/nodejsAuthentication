@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/authenticationapp');
+// mongoose.connect('mongodb://localhost/authenticationapp');
+mongoose.connect('mongodb+srv://nandishmohanty:Mohanty1818@cluster0.vugqe6n.mongodb.net/?retryWrites=true&w=majority')
 
 const db = mongoose.connection;
 
