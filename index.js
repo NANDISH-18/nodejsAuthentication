@@ -2,19 +2,26 @@ const express = require('express');
 const port = 8000;
 
 const db = require('./config/mongoose');
+const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
 const passport = require('passport');
 const LocalStrategy = require('./config/passport_local_strategy');
+const googleStrategy = require('./config/passport-google.oauth2-strategy');
 
 const session = require('express-session');
-
+const flash = require('connect-flash');
+const customMiddleware = require('./config/middleware');
 
 // EJS
+app.use(expressLayouts);
 app.use(express.static('./assets'));
 app.set('view engine', 'ejs');
 app.set('views', './views');
+// Extract the style
+app.set('layout extractStyles',true);
+app.set('layout extractScript',true);
 
 app.use(express.urlencoded());
 
@@ -33,6 +40,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session())
 app.use(passport.setAuthenticatedUser);
+app.use(flash());
+app.use(customMiddleware.setflash);
 
 
 
