@@ -2,7 +2,9 @@ const User = require('../models/user')
 
 // Signp page
 module.exports.signUpPage = function(req,res){
-
+    if(req.isAuthenticated()){
+        return res.redirect('/home');
+    }
     res.render('signUp',{
         title: 'Sign Up'
     })
@@ -32,7 +34,38 @@ module.exports.signUp = async (req,res) => {
             email: email,
             password: password
         });
-        return res.redirect('/');
+        return res.redirect('/login');
 
     
 }
+
+// Sign in page
+module.exports.signInPage = function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/home');
+    }
+    res.render('signIn',{
+        title: 'Sign In'
+    })
+}
+
+// Sign in functionality
+module.exports.signIn = async (req,res)=>{
+
+    console.log("User is logged in successfully");
+    return res.redirect('/home');
+}
+
+
+
+
+// Home page
+module.exports.homePage = function(req,res){
+    if(req.isAuthenticated()){
+        res.render('home',{
+            title: 'home'
+        })
+    }
+    return res.render('/login')
+}
+
